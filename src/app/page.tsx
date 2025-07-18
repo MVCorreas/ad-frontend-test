@@ -1,7 +1,25 @@
-export default async function Home() {
+import Catalog from '@/components/Catalog';
+import Header from '@/components/Header';
+
+interface SearchParams {
+  genre?: string;
+  page?: string;
+}
+
+export default async function Home({
+  searchParams
+}: {
+  searchParams: SearchParams
+}) {
+  const genre = searchParams.genre;
+  const page = searchParams.page ? parseInt(searchParams.page) : 1;
+
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24 font-bold text-4xl text-blue-600'>
-      Hello, world!
-    </main>
-  )
+    <>
+      <Header />
+      <main className="min-h-screen bg-gray-50">
+        <Catalog genre={genre} page={page} />
+      </main>
+    </>
+  );
 }

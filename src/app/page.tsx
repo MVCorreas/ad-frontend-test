@@ -1,5 +1,6 @@
-import Catalog from '@/components/Catalog';
-import Header from '@/components/Header';
+import Catalog from "@/components/Catalog";
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 
 interface SearchParams {
   genre?: string;
@@ -7,9 +8,9 @@ interface SearchParams {
 }
 
 export default async function Home({
-  searchParams
+  searchParams,
 }: {
-  searchParams: SearchParams
+  searchParams: SearchParams;
 }) {
   const genre = searchParams.genre;
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
@@ -18,6 +19,7 @@ export default async function Home({
     <>
       <Header />
       <Catalog genre={genre} page={page} />
+      <Footer />
     </>
   );
 }

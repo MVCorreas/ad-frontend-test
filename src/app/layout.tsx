@@ -17,16 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-
-        <main>
-          {children}
-          </main>
-          <footer>
-            Footer
-            <p>© {new Date().getFullYear()} Apply Digital</p>
-          </footer>
-          </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

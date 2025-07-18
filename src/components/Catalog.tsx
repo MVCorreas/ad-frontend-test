@@ -1,5 +1,5 @@
 import { Game } from '@/utils/endpoint';
-import GameGrid from './GameGrid';
+import GameCard from './GameCard';
 
 async function fetchGames(genre?: string, page: number = 1) {
   const searchParams = new URLSearchParams();
@@ -27,44 +27,63 @@ export default async function Catalog({ genre, page = 1 }: CatalogProps) {
   const { games, availableFilters, totalPages, currentPage } = data;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-2">Game Catalog</h1>
-        <p className="text-gray-600">Discover amazing games for every taste</p>
-      </div>
-
-      {/* Genre Filter */}
-      <div className="mb-6">
-        <label htmlFor="genre-filter" className="block text-sm font-medium text-gray-700 mb-2">
-          Filter by Genre:
-        </label>
-        <select
-          id="genre-filter"
-          defaultValue={genre || ""}
-          className="border border-gray-300 rounded-md px-3 py-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="">All Genres</option>
-          {availableFilters.map((filter: string) => (
-            <option key={filter} value={filter}>
-              {filter}
-            </option>
-          ))}
-        </select>
+    <div className="min-h-screen bg-gray-50">
+      {/* Header Section */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">Catalog</h1>
+              <p className="mt-1 text-sm text-gray-600">Discover amazing games for every taste</p>
+            </div>
+            
+            {/* Genre Filter */}
+            <div className="mt-4 sm:mt-0">
+              <label htmlFor="genre-filter" className="sr-only">
+                Filter by Genre
+              </label>
+              <select
+                id="genre-filter"
+                defaultValue={genre || ""}
+                className="block w-full sm:w-48 border border-gray-300 rounded-md px-3 py-2 bg-white text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+              >
+                <option value="">All Genres</option>
+                {availableFilters.map((filter: string) => (
+                  <option key={filter} value={filter}>
+                    {filter}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
 
       {/* Games Grid */}
-      <GameGrid games={games} />
-
-      {/* Pagination Info */}
-      <div className="mt-8 text-center">
-        <p className="text-gray-600">
-          Page {currentPage} of {totalPages} • Showing {games.length} games
-        </p>
-        {currentPage < totalPages && (
-          <button className="mt-4 bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition-colors">
-            See More
-          </button>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {games.length === 0 ? (
+          <div className="text-center py-16">
+            <p className="text-gray-500 text-lg">No games found.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {games.map((game: Game) => (
+              <GameCard key={game.id} game={game} />
+            ))}
+          </div>
         )}
+
+        {/* Pagination Info */}
+        <div className="mt-12 text-center">
+          <p className="text-gray-500 text-sm mb-4">
+            Page {currentPage} of {totalPages} • Showing {games.length} games
+          </p>
+          {currentPage < totalPages && (
+            <button className="bg-gray-900 text-white px-8 py-3 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors">
+              See More
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

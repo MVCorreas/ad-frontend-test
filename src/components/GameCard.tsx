@@ -14,38 +14,38 @@ export default function GameCard({ game }: GameCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-gray-300">
       <div className="relative">
         <Image
           src={game.image}
           alt={game.name}
-          width={300}
-          height={200}
-          className="w-full h-48 object-cover"
+          width={280}
+          height={160}
+          className="w-full h-40 object-cover"
         />
         {game.isNew && (
-          <span className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs font-semibold rounded">
+          <span className="absolute top-3 right-3 bg-green-500 text-white px-2 py-1 text-xs font-medium rounded">
             New
           </span>
         )}
       </div>
       
       <div className="p-4">
-        <h3 className="font-bold text-lg mb-2 text-gray-800">{game.name}</h3>
-        <p className="text-gray-600 text-sm mb-2 line-clamp-2">{game.description}</p>
-        <p className="text-gray-500 text-sm mb-3 font-medium">{game.genre}</p>
+        <p className="text-gray-500 text-xs mb-3 uppercase tracking-wide">{game.genre}</p>
         
-        <div className="flex justify-between items-center">
-          <span className="text-xl font-bold text-green-600">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="font-semibold text-base text-gray-900 flex-1 mr-2">{game.name}</h3>
+          <span className="text-lg font-bold text-gray-900 whitespace-nowrap">
             ${game.price}
           </span>
-          <button
-            onClick={handleAddToCart}
-            className="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-600 transition-colors duration-200"
-          >
-            Add to Cart
-          </button>
         </div>
+        
+        <button
+          onClick={handleAddToCart}
+          className="w-full bg-gray-900 text-white py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors duration-200"
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   );

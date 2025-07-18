@@ -17,9 +17,7 @@ export default async function Home({
   return (
     <>
       <Header />
-      <main className="min-h-screen bg-gray-50">
-        <Catalog genre={genre} page={page} />
-      </main>
+      <Catalog genre={genre} page={page} />
     </>
   );
 }

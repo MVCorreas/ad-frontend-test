@@ -2,14 +2,17 @@
 
 import Image from 'next/image';
 import { Game } from '@/utils/endpoint';
+import { useCart } from '@/context/CartContext';
 
 interface GameCardProps {
   game: Game;
 }
 
 export default function GameCard({ game }: GameCardProps) {
+  const { addToCart } = useCart();
+
   const handleAddToCart = () => {
-    // TODO: Implement cart functionality
+    addToCart(game);
     console.log('Adding to cart:', game.name);
   };
 

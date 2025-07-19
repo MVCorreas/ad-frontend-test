@@ -1,6 +1,5 @@
 import Catalog from "@/components/Catalog";
 import Footer from "@/components/Footer";
-import Header from "@/components/Header";
 
 interface SearchParams {
   genre?: string;
@@ -17,7 +16,6 @@ export default async function Home({
 
   return (
     <>
-      <Header />
       <Catalog genre={genre} page={page} />
       <Footer />
     </>

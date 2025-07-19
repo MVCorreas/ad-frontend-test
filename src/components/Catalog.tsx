@@ -1,20 +1,17 @@
 import { Game } from '@/utils/endpoint';
 import GameCard from './GameCard';
+import axios from 'axios';
 
-async function fetchGames(genre?: string, page: number = 1) {
+function fetchGames(genre?: string, page: number = 1) {
   const searchParams = new URLSearchParams();
   if (genre) searchParams.append('genre', genre);
   searchParams.append('page', page.toString());
   
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/games?${searchParams}`, {
-    cache: 'no-store', // Disable caching for demo purposes due to the delay
-  });
-  
-  if (!response.ok) {
-    throw new Error('Failed to fetch games');
-  }
-  
-  return response.json();
+  return axios.get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/games?${searchParams}`)
+    .then(response => response.data)
+    .catch(error => {
+      throw new Error('Failed to fetch games');
+    });
 }
 
 interface CatalogProps {

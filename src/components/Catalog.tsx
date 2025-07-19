@@ -6,7 +6,7 @@ async function fetchGames(genre?: string, page: number = 1) {
   if (genre) searchParams.append('genre', genre);
   searchParams.append('page', page.toString());
   
-  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'}/api/games?${searchParams}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/games?${searchParams}`, {
     cache: 'no-store', // Disable caching for demo purposes due to the delay
   });
   

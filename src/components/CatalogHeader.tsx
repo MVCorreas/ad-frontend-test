@@ -1,13 +1,11 @@
-import { FiChevronDown } from "react-icons/fi";
+import SearchBar from "./SearchBar";
 
 interface CatalogHeaderProps {
   availableFilters: string[];
-  genre?: string;
 }
 
 export default function CatalogHeader({
   availableFilters,
-  genre,
 }: CatalogHeaderProps) {
   return (
     <div className="border-b border-gray-100">
@@ -17,26 +15,8 @@ export default function CatalogHeader({
             <h1 className="text-2xl font-bold text-gray-900">Top Sellers</h1>
           </div>
 
-          <div className="mt-4 sm:mt-0 flex items-center space-x-2">
-            <span className="text-colour-primary text-sm font-bold">Genre</span>
-            <span className="text-colour-primary">|</span>
-            <div className="relative">
-              <select
-                id="genre-filter"
-                defaultValue={genre || ""}
-                className="appearance-none bg-transparent border-none px-2 py-1 pr-6 text-sm text-colour-primary focus:outline-none cursor-pointer"
-              >
-                <option value="">All</option>
-                {availableFilters.map((filter: string) => (
-                  <option key={filter} value={filter}>
-                    {filter}
-                  </option>
-                ))}
-              </select>
-              <div className="absolute inset-y-0 right-0 flex items-center pr-1 pointer-events-none">
-                <FiChevronDown />
-              </div>
-            </div>
+          <div className="mt-4 sm:mt-0">
+            <SearchBar availableFilters={availableFilters} />
           </div>
         </div>
       </div>

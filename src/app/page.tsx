@@ -35,7 +35,7 @@ export default async function Home({
   return (
     <>
       <div className="min-h-screen bg-white">
-        <CatalogHeader availableFilters={availableFilters} genre={genre} />
+        <CatalogHeader availableFilters={availableFilters} />
         <GamesGrid
           games={games}
           currentPage={currentPage}

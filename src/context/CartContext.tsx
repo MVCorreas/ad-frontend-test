@@ -1,6 +1,12 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 import { Game } from "@/utils/endpoint";
 
 interface CartItem {
@@ -10,8 +16,8 @@ interface CartItem {
 
 interface CartContextType {
   items: CartItem[];
-  addToCart: (game: Game) => void;
-  removeFromCart: (gameId: string) => void;
+  addToCart: (game: Game, quantity?: number) => void;
+  removeFromCart: (gameId: string, removeAll?: boolean) => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
 }
@@ -22,7 +28,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     Promise.resolve()
       .then(() => {
         const savedCart = localStorage.getItem("cartItems");
@@ -42,7 +48,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
   }, []);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!isLoaded) return;
 
     Promise.resolve()
@@ -54,26 +60,40 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
   }, [items, isLoaded]);
 
-  const addToCart = (game: Game) => {
+  const addToCart = (game: Game, quantity: number = 1) => {
     setItems((prevItems) => {
       const existingItem = prevItems.find((item) => item.game.id === game.id);
 
       if (existingItem) {
         return prevItems.map((item) =>
           item.game.id === game.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? { ...item, quantity: item.quantity + quantity }
             : item
         );
       } else {
-        return [...prevItems, { game, quantity: 1 }];
+        return [...prevItems, { game, quantity }];
       }
     });
   };
 
-  const removeFromCart = (gameId: string) => {
-    setItems((prevItems) =>
-      prevItems.filter((item) => item.game.id !== gameId)
-    );
+  const removeFromCart = (gameId: string, removeAll: boolean = false) => {
+    setItems((prevItems) => {
+      if (removeAll) {
+        return prevItems.filter((item) => item.game.id !== gameId);
+      } else {
+        return prevItems
+          .map((item) => {
+            if (item.game.id === gameId) {
+              const newQuantity = item.quantity - 1;
+              return newQuantity > 0
+                ? { ...item, quantity: newQuantity }
+                : null;
+            }
+            return item;
+          })
+          .filter((item): item is CartItem => item !== null);
+      }
+    });
   };
 
   const getTotalItems = () => {

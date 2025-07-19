@@ -29,8 +29,8 @@ export default function SearchBar({ availableFilters }: SearchBarProps) {
 
   return (
     <div className="flex items-center space-x-2">
-      <span className="text-colour-tertiary text-sm font-medium">Genre</span>
-      <span className="text-colour-tertiary">|</span>
+      <span className="text-colour-primary text-sm font-medium">Genre</span>
+      <span className="text-colour-primary">|</span>
       <div className="relative">
         <select
           id="genre-filter"

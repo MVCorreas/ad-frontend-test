@@ -10,9 +10,14 @@ interface GameCardProps {
 
 export default function GameCard({ game }: GameCardProps) {
   const { addToCart } = useCart();
+  const { removeFromCart } = useCart();
 
   const handleAddToCart = () => {
     addToCart(game);
+  };
+
+  const handleRemoveFromCart = () => {
+    removeFromCart(game.id);
   };
 
   return (

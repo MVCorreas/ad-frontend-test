@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import { Game } from '@/utils/endpoint';
-import { useCart } from '@/context/CartContext';
+import Image from "next/image";
+import { Game } from "@/utils/endpoint";
+import { useCart } from "@/context/CartContext";
 
 interface GameCardProps {
   game: Game;
@@ -13,7 +13,6 @@ export default function GameCard({ game }: GameCardProps) {
 
   const handleAddToCart = () => {
     addToCart(game);
-    console.log('Adding to cart:', game.name);
   };
 
   return (
@@ -32,17 +31,21 @@ export default function GameCard({ game }: GameCardProps) {
           </span>
         )}
       </div>
-      
+
       <div className="p-4">
-        <p className="text-gray-500 text-xs mb-3 uppercase tracking-wide">{game.genre}</p>
-        
+        <p className="text-gray-500 text-xs mb-3 uppercase tracking-wide">
+          {game.genre}
+        </p>
+
         <div className="flex justify-between items-start mb-4">
-          <h3 className="font-semibold text-base text-gray-900 flex-1 mr-2">{game.name}</h3>
+          <h3 className="font-semibold text-base text-gray-900 flex-1 mr-2">
+            {game.name}
+          </h3>
           <span className="text-lg font-bold text-gray-900 whitespace-nowrap">
             ${game.price}
           </span>
         </div>
-        
+
         <button
           onClick={handleAddToCart}
           className="w-full bg-gray-900 text-white py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors duration-200"

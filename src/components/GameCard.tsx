@@ -26,7 +26,7 @@ export default function GameCard({ game }: GameCardProps) {
           className="w-full h-40 object-cover"
         />
         {game.isNew && (
-          <span className="absolute top-3 right-3 bg-green-500 text-white px-2 py-1 text-xs font-medium rounded">
+          <span className="absolute top-3 left-3 bg-stone-100 text-[#3B3B3B] px-2 py-1 text-xs font-sm rounded">
             New
           </span>
         )}

@@ -3,21 +3,23 @@
 import Image from "next/image";
 import { Game } from "@/utils/endpoint";
 import { useCart } from "@/context/CartContext";
+import Button from "./Button";
 
 interface GameCardProps {
   game: Game;
 }
 
 export default function GameCard({ game }: GameCardProps) {
-  const { addToCart } = useCart();
-  const { removeFromCart } = useCart();
+  const { addToCart, removeFromCart, items } = useCart();
 
-  const handleAddToCart = () => {
-    addToCart(game);
-  };
+  const isInCart = items.some((item) => item.game.id === game.id);
 
-  const handleRemoveFromCart = () => {
-    removeFromCart(game.id);
+  const handleButtonClick = () => {
+    if (isInCart) {
+      removeFromCart(game.id, true);
+    } else {
+      addToCart(game);
+    }
   };
 
   return (
@@ -51,12 +53,11 @@ export default function GameCard({ game }: GameCardProps) {
           </span>
         </div>
 
-        <button
-          onClick={handleAddToCart}
-          className="w-full bg-gray-900 text-white py-2 rounded text-sm font-medium hover:bg-gray-800 transition-colors duration-200"
-        >
-          Add to Cart
-        </button>
+        <Button
+          text={isInCart ? "Remove" : "Add to Cart"}
+          onClick={handleButtonClick}
+          variant={isInCart ? "secondary" : "primary"}
+        />
       </div>
     </div>
   );

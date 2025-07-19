@@ -26,22 +26,22 @@ export default function GameCard({ game }: GameCardProps) {
           className="w-full h-40 object-cover"
         />
         {game.isNew && (
-          <span className="absolute top-3 left-3 bg-stone-100 text-[#3B3B3B] px-2 py-1 text-xs font-sm rounded">
+          <span className="absolute top-3 left-3 bg-stone-100 text-colour-primary px-2 py-1 text-xs font-sm rounded">
             New
           </span>
         )}
       </div>
 
       <div className="p-4">
-        <p className="text-gray-500 text-xs mb-3 uppercase tracking-wide">
+        <p className="text-colour-tertiary text-xs mb-3 uppercase tracking-wide">
           {game.genre}
         </p>
 
         <div className="flex justify-between items-start mb-4">
-          <h3 className="font-semibold text-base text-gray-900 flex-1 mr-2">
+          <h3 className="font-semibold text-base text-colour-primary flex-1 mr-2">
             {game.name}
           </h3>
-          <span className="text-lg font-bold text-gray-900 whitespace-nowrap">
+          <span className="text-lg font-bold text-colour-primary whitespace-nowrap">
             ${game.price}
           </span>
         </div>

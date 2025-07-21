@@ -56,7 +56,8 @@ export default function GameCard({ game }: GameCardProps) {
         <Button
           text={isInCart ? "Remove" : "Add to Cart"}
           onClick={handleButtonClick}
-          variant={"primary"}
+          variant="primary"
+          size="big"
         />
       </div>
     </div>

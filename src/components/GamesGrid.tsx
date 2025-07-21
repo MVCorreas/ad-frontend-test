@@ -1,5 +1,7 @@
+"use client";
 import { Game } from '@/utils/endpoint';
 import GameCard from './GameCard';
+import Button from './Button';
 
 interface GamesGridProps {
   games: Game[];
@@ -22,16 +24,17 @@ export default function GamesGrid({ games, currentPage, totalPages }: GamesGridP
             ))}
           </div>
         )}
-
-        {/* Pagination Info */}
         <div className="mt-12 text-center">
           <p className="text-gray-500 text-sm mb-4">
             Page {currentPage} of {totalPages} • Showing {games.length} games
           </p>
           {currentPage < totalPages && (
-            <button className="bg-gray-900 text-white px-8 py-3 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors">
-              See More
-            </button>
+            <Button 
+              text="See More"
+              onClick={() => console.log('Load more games')}
+              variant="secondary"
+              size='small'
+            />
           )}
         </div>
       </div>

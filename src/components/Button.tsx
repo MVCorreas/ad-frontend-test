@@ -4,15 +4,20 @@ interface ButtonProps {
   text: string;
   onClick: React.MouseEventHandler<HTMLButtonElement>;
   variant?: "primary" | "secondary";
+  size?: "small" | "big";
 }
 
 export default function Button({
   text,
   onClick,
   variant = "primary",
+  size = "small",
 }: ButtonProps) {
-  const baseStyles =
-    "w-full min-h-12 focus:outline-none rounded-lg font-medium transition-colors duration-200";
+
+  const sizeStyles = 
+    size === "big"
+      ? "w-full min-h-14 px-8 py-4 text-lg focus:outline-none rounded-lg font-medium transition-colors duration-200"
+      : "min-h-12 px-6 py-3 text-base focus:outline-none rounded-lg font-medium transition-colors duration-200";
 
   const variantStyles =
     variant === "primary"
@@ -20,7 +25,7 @@ export default function Button({
       : "bg-colour-secondary text-white hover:bg-transparent hover:text-colour-primary hover:border hover:border-colour-primary";
 
   return (
-    <button onClick={onClick} className={`${baseStyles} ${variantStyles}`}>
+    <button onClick={onClick} className={` ${sizeStyles} ${variantStyles}`}>
       {text}
     </button>
   );

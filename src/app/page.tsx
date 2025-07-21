@@ -1,19 +1,33 @@
 import CatalogHeader from "@/components/CatalogHeader";
 import GamesGrid from "@/components/GamesGrid";
 import Footer from "@/components/Footer";
-import axios from "axios";
+import { allGames, availableFilters, delay } from "@/utils/endpoint";
 
-function fetchGames(genre?: string, page: number = 1) {
-  const searchParams = new URLSearchParams();
-  if (genre) searchParams.append("genre", genre);
-  searchParams.append("page", page.toString());
+const ITEMS_PER_PAGE = 12;
 
-  return axios
-    .get(`${process.env.NEXT_PUBLIC_BASE_URL}/api/games?${searchParams}`)
-    .then((response) => response.data)
-    .catch((error) => {
-      throw new Error("Failed to fetch games");
-    });
+async function fetchGames(genre?: string, page: number = 1) {
+  // Simulate the API logic directly
+  let filteredGames = allGames;
+
+  if (genre) {
+    filteredGames = filteredGames.filter(
+      (game) => game.genre.toLowerCase() === genre.toLowerCase()
+    );
+  }
+
+  if (page < 1 || isNaN(page)) page = 1;
+
+  // Mock delay like in the API
+  await delay(100); // Reduced delay for development
+
+  const totalPages = Math.ceil(filteredGames.length / ITEMS_PER_PAGE);
+  const fromIndex = (page - 1) * ITEMS_PER_PAGE;
+  const toIndex = page * ITEMS_PER_PAGE;
+  const games = filteredGames.slice(fromIndex, toIndex);
+
+  const currentPage = page;
+
+  return { games, availableFilters, totalPages, currentPage };
 }
 
 interface SearchParams {

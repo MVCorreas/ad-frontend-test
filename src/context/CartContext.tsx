@@ -29,6 +29,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    // Only run on client side
+    if (typeof window === 'undefined') return;
+    
     Promise.resolve()
       .then(() => {
         const savedCart = localStorage.getItem("cartItems");
@@ -49,7 +52,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   useEffect(() => {
-    if (!isLoaded) return;
+    // Only run on client side and after initial load
+    if (typeof window === 'undefined' || !isLoaded) return;
 
     Promise.resolve()
       .then(() => {

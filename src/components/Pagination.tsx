@@ -6,7 +6,7 @@ interface PaginationProps {
   canLoadMore: boolean;
   canLoadLess: boolean;
   onLoadMore: () => void;
-  onLoadLess: () => void;
+  onGoBack: () => void;
   isLoading?: boolean;
 }
 
@@ -16,7 +16,7 @@ export default function Pagination({
   canLoadMore,
   canLoadLess,
   onLoadMore,
-  onLoadLess,
+  onGoBack,
   isLoading = false,
 }: PaginationProps) {
   return (
@@ -28,8 +28,8 @@ export default function Pagination({
       <div className="flex justify-center gap-4">
         {canLoadLess && (
           <Button
-            text="Show Less"
-            onClick={onLoadLess}
+            text="Back"
+            onClick={onGoBack}
             variant="secondary"
             size="small"
           />

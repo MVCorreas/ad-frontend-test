@@ -7,7 +7,7 @@ interface GamesGridProps {
   canLoadMore: boolean;
   canLoadLess: boolean;
   onLoadMore: () => void;
-  onLoadLess: () => void;
+  onGoBack: () => void;
   isLoading?: boolean;
   totalGamesShown: number;
   totalGamesAvailable: number;
@@ -18,7 +18,7 @@ export default function GamesGrid({
   canLoadMore,
   canLoadLess,
   onLoadMore,
-  onLoadLess,
+  onGoBack,
   isLoading = false,
   totalGamesShown,
   totalGamesAvailable,
@@ -44,7 +44,7 @@ export default function GamesGrid({
           canLoadMore={canLoadMore}
           canLoadLess={canLoadLess}
           onLoadMore={onLoadMore}
-          onLoadLess={onLoadLess}
+          onGoBack={onGoBack}
           isLoading={isLoading}
         />
       </div>

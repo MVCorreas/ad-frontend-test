@@ -1,8 +1,6 @@
-"use client";
-import { useRouter, useSearchParams } from "next/navigation";
 import { Game } from "@/utils/endpoint";
 import GameCard from "./GameCard";
-import Button from "./Button";
+import Pagination from "./Pagination";
 
 interface GamesGridProps {
   games: Game[];
@@ -40,30 +38,15 @@ export default function GamesGrid({
           </div>
         )}
 
-        <div className="mt-12 text-center">
-          <p className="text-gray-500 text-sm mb-4">
-            Showing {totalGamesShown} of {totalGamesAvailable} games
-          </p>
-
-          <div className="flex justify-center gap-4">
-            {canLoadLess && (
-              <Button
-                text="Show Less"
-                onClick={onLoadLess}
-                variant="secondary"
-                size="small"
-              />
-            )}
-            {canLoadMore && (
-              <Button
-                text={isLoading ? "Loading..." : "See More"}
-                onClick={onLoadMore}
-                variant="secondary"
-                size="small"
-              />
-            )}
-          </div>
-        </div>
+        <Pagination
+          totalShown={totalGamesShown}
+          totalAvailable={totalGamesAvailable}
+          canLoadMore={canLoadMore}
+          canLoadLess={canLoadLess}
+          onLoadMore={onLoadMore}
+          onLoadLess={onLoadLess}
+          isLoading={isLoading}
+        />
       </div>
     </div>
   );

@@ -1,6 +1,8 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
 import { Game } from "@/utils/endpoint";
 import GamesGrid from "./GamesGrid";
 
@@ -19,6 +21,32 @@ export default function GamesCatalog({
 }: GamesCatalogProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsInitialLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isInitialLoading) {
+    return (
+      <div className="fixed inset-0 flex flex-col justify-center items-center bg-white z-50">
+        <Image
+          src="/loading-pacman.gif"
+          alt="Loading..."
+          width={500}
+          height={500}
+          unoptimized
+        />
+        <span className="text-colour-primary text-lg font-semibold mt-4">
+          Loading GamerShop...
+        </span>
+      </div>
+    );
+  }
 
   const handleLoadMore = () => {
     const params = new URLSearchParams(searchParams);
@@ -39,7 +67,7 @@ export default function GamesCatalog({
   const canLoadMore = currentPage < totalPages;
   const canLoadLess = currentPage > 1;
   const totalGamesShown = games.length;
-  const totalGamesAvailable = totalPages * 12; // Approximate
+  const totalGamesAvailable = totalPages * 12;
 
   return (
     <GamesGrid

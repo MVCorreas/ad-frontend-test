@@ -9,7 +9,7 @@ export default function CartPage() {
   const { items: cartItems } = useCart();
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="bg-white h-full">
       <CartHeader />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {cartItems.length === 0 ? (

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import Link from "next/link";
 import { FiShoppingCart } from "react-icons/fi";
@@ -8,11 +8,13 @@ export default function Header() {
   const { getTotalItems } = useCart();
   const totalItems = getTotalItems();
   return (
-    <header className="bg-gray-200 shadow-sm">
+    <header className="bg-[#EEEEEE] shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href="/" className="flex items-center">
-            <span className="text-xl font-medium text-colour-secondary hover:text-colour-primary">GamerShop</span>
+            <span className="text-xl font-medium text-colour-secondary hover:text-colour-primary">
+              GamerShop
+            </span>
           </Link>
 
           <nav className="flex items-center space-x-8">
@@ -27,7 +29,7 @@ export default function Header() {
                 </span>
               )}
             </Link>
-          </nav> 
+          </nav>
         </div>
       </div>
     </header>

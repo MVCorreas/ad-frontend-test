@@ -36,7 +36,7 @@ export default function Pagination({
         )}
         {canLoadMore && (
           <Button
-            text={isLoading ? "Loading..." : "See More"}
+            text={"SEE MORE"}
             onClick={onLoadMore}
             variant="secondary"
             size="small"

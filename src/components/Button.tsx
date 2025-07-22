@@ -13,10 +13,9 @@ export default function Button({
   variant = "primary",
   size = "small",
 }: ButtonProps) {
-
-  const sizeStyles = 
+  const sizeStyles =
     size === "big"
-      ? "w-full min-h-14 px-8 py-4 text-lg focus:outline-none rounded-lg font-medium transition-colors duration-200"
+      ? "w-full min-h-[56px] py-2 text-lg focus:outline-none rounded-lg font-medium transition-colors duration-200"
       : "min-h-12 px-6 py-3 text-base focus:outline-none rounded-lg font-medium transition-colors duration-200";
 
   const variantStyles =

@@ -23,38 +23,38 @@ export default function GameCard({ game }: GameCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-gray-300">
-      <div className="relative">
+    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-gray-300 p-2 flex flex-col h-full">
+      <div className="relative p-3">
         <Image
           src={game.image}
           alt={game.name}
-          width={280}
-          height={160}
-          className="w-full h-40 object-cover"
+          width={332}
+          height={240}
+          className="w-full h-60 object-cover rounded-t-2xl rounded-b-none"
         />
         {game.isNew && (
-          <span className="absolute top-3 left-3 bg-stone-100 text-colour-primary px-2 py-1 text-xs font-sm rounded">
-            New
+          <span className="absolute top-5 left-5 bg-stone-100 text-colour-primary w-14 h-8 flex items-center justify-center text-base font-normal leading-4 tracking-wider text-center rounded-md py-2 px-3 font-archivo">
+            NEW
           </span>
         )}
       </div>
 
-      <div className="p-4">
-        <p className="text-colour-tertiary text-xs mb-3 uppercase tracking-wide">
+      <div className="p-4 flex flex-col flex-1">
+        <p className="text-colour-tertiary text-xs font-bold mb-3 uppercase tracking-wide">
           {game.genre}
         </p>
 
-        <div className="flex justify-between items-start mb-4">
-          <h3 className="font-semibold text-base text-colour-primary flex-1 mr-2">
+        <div className="flex justify-between items-start mb-4 flex-1 gap-8">
+          <h3 className="font-semibold text-sm text-colour-primary flex-1 mr-2">
             {game.name}
           </h3>
-          <span className="text-lg font-bold text-colour-primary whitespace-nowrap">
+          <span className="font-semibold text-sm text-colour-primary whitespace-nowrap">
             ${game.price}
           </span>
         </div>
 
         <Button
-          text={isInCart ? "Remove" : "Add to Cart"}
+          text={isInCart ? "REMOVE" : "ADD TO CART"}
           onClick={handleButtonClick}
           variant="primary"
           size="big"

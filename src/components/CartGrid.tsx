@@ -23,36 +23,36 @@ export default function CartGrid({ onCartUpdate }: CartGridProps) {
               <Image
                 src={game.image}
                 alt={game.name}
-                width={120}
+                width={200}
                 height={120}
-                className="rounded-lg object-cover"
+                className="object-cover"
               />
             </div>
 
-            <div className="flex-1 min-w-0">
-              <div className="flex justify-between">
-                <div>
-                  <p className="text-sm text-gray-500 uppercase tracking-wide mb-1">
+            <div className="flex-1 min-w-0 flex flex-col justify-between h-[120px]">
+              <div className="flex justify-between items-start">
+                <div className="flex-1">
+                  <p className="text-sm text-colour-tertiary font-bold uppercase tracking-wide mb-1">
                     {game.genre}
                   </p>
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <h3 className="text-lg font-semibold text-colour-primary mb-2">
                     {game.name}
                   </h3>
-                  <p className="text-sm text-gray-500 mb-4">
+                  <p className="text-sm text-colour-tertiary mb-4">
                     {game.description}
                   </p>
                 </div>
 
                 <button
                   onClick={() => handleRemoveFromCart(game.id)}
-                  className="text-gray-400 hover:text-gray-500 text-xl"
+                  className="text-gray-400 hover:text-gray-500 text-xl ml-4"
                 >
                   ×
                 </button>
               </div>
 
               <div className="flex justify-end">
-                <p className="text-lg font-semibold text-gray-900">
+                <p className="text-lg font-semibold text-colour-primary">
                   ${game.price.toFixed(2)}
                 </p>
               </div>

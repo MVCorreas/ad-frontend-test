@@ -1,8 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Image from "next/image";
-import { Game } from "@/utils/endpoint";
 import { useCart } from "@/context/CartContext";
 
 interface CartGridProps {
@@ -14,7 +12,6 @@ export default function CartGrid({ onCartUpdate }: CartGridProps) {
 
   const handleRemoveFromCart = (gameId: string) => {
     removeFromCartContext(gameId);
-    // Notify parent component about cart update
     onCartUpdate?.();
   };
 
@@ -63,7 +60,7 @@ export default function CartGrid({ onCartUpdate }: CartGridProps) {
                     </div>
 
                     <button
-                      onClick={() => console.log("Remove from cart")}
+                      onClick={() => handleRemoveFromCart(game.id)}
                       className="text-gray-400 hover:text-gray-500 text-xl"
                     >
                       ×

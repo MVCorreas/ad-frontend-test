@@ -12,11 +12,11 @@ interface GameCardProps {
 export default function GameCard({ game }: GameCardProps) {
   const { addToCart, removeFromCart, items } = useCart();
 
-  const isInCart = items.some((item) => item.game.id === game.id);
+  const isInCart = items.some((item) => item.id === game.id);
 
   const handleButtonClick = () => {
     if (isInCart) {
-      removeFromCart(game.id, true);
+      removeFromCart(game.id);
     } else {
       addToCart(game);
     }

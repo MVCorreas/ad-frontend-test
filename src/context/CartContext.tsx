@@ -9,15 +9,10 @@ import React, {
 } from "react";
 import { Game } from "@/utils/endpoint";
 
-interface CartItem {
-  game: Game;
-  quantity: number;
-}
-
 interface CartContextType {
-  items: CartItem[];
-  addToCart: (game: Game, quantity?: number) => void;
-  removeFromCart: (gameId: string, removeAll?: boolean) => void;
+  items: Game[];
+  addToCart: (game: Game) => void;
+  removeFromCart: (gameId: string) => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
 }
@@ -25,7 +20,7 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>([]);
+  const [items, setItems] = useState<Game[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -64,51 +59,29 @@ export function CartProvider({ children }: { children: ReactNode }) {
       });
   }, [items, isLoaded]);
 
-  const addToCart = (game: Game, quantity: number = 1) => {
+  const addToCart = (game: Game) => {
     setItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.game.id === game.id);
+      const existingItem = prevItems.find((item) => item.id === game.id);
 
-      if (existingItem) {
-        return prevItems.map((item) =>
-          item.game.id === game.id
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
-      } else {
-        return [...prevItems, { game, quantity }];
+      if (!existingItem) {
+        return [...prevItems, game];
       }
+      return prevItems; // Don't add duplicates
     });
   };
 
-  const removeFromCart = (gameId: string, removeAll: boolean = false) => {
+  const removeFromCart = (gameId: string) => {
     setItems((prevItems) => {
-      if (removeAll) {
-        return prevItems.filter((item) => item.game.id !== gameId);
-      } else {
-        return prevItems
-          .map((item) => {
-            if (item.game.id === gameId) {
-              const newQuantity = item.quantity - 1;
-              return newQuantity > 0
-                ? { ...item, quantity: newQuantity }
-                : null;
-            }
-            return item;
-          })
-          .filter((item): item is CartItem => item !== null);
-      }
+      return prevItems.filter((item) => item.id !== gameId);
     });
   };
 
   const getTotalItems = () => {
-    return items.reduce((total, item) => total + item.quantity, 0);
+    return items.length;
   };
 
   const getTotalPrice = () => {
-    return items.reduce(
-      (total, item) => total + item.game.price * item.quantity,
-      0
-    );
+    return items.reduce((total, item) => total + item.price, 0);
   };
 
   return (

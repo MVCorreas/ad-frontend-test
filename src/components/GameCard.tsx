@@ -10,17 +10,19 @@ interface GameCardProps {
 }
 
 export default function GameCard({ game }: GameCardProps) {
-  const { addToCart, removeFromCart, items } = useCart();
+  const { addToCart, removeFromCart, items: cartItems } = useCart();
 
-  const isInCart = items.some((item) => item.id === game.id);
+  const isGameInCart = cartItems.some((cartItem) => cartItem.id === game.id);
 
-  const handleButtonClick = () => {
-    if (isInCart) {
+  const toggleCartItem = () => {
+    if (isGameInCart) {
       removeFromCart(game.id);
     } else {
       addToCart(game);
     }
   };
+
+  const buttonText = isGameInCart ? "REMOVE" : "ADD TO CART";
 
   return (
     <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-gray-300 p-2 flex flex-col h-full">
@@ -54,8 +56,8 @@ export default function GameCard({ game }: GameCardProps) {
         </div>
 
         <Button
-          text={isInCart ? "REMOVE" : "ADD TO CART"}
-          onClick={handleButtonClick}
+          text={buttonText}
+          onClick={toggleCartItem}
           variant="primary"
           size="big"
         />

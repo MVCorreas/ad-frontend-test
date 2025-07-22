@@ -2,16 +2,12 @@
 
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
-interface CartGridProps {
-  onCartUpdate?: () => void;
-}
 
-export default function CartGrid({ onCartUpdate }: CartGridProps) {
-  const { items: cartItems, removeFromCart: removeFromCartContext } = useCart();
+export default function CartGrid() {
+  const { items: cartItems, removeFromCart } = useCart();
 
-  const handleRemoveFromCart = (gameId: string) => {
-    removeFromCartContext(gameId);
-    onCartUpdate?.();
+  const handleRemoveGame = (gameId: string) => {
+    removeFromCart(gameId);
   };
 
   return (
@@ -44,7 +40,7 @@ export default function CartGrid({ onCartUpdate }: CartGridProps) {
                 </div>
 
                 <button
-                  onClick={() => handleRemoveFromCart(game.id)}
+                  onClick={() => handleRemoveGame(game.id)}
                   className="text-gray-400 hover:text-gray-500 text-xl ml-4"
                 >
                   ×

@@ -6,7 +6,8 @@ import { useCart } from "@/context/CartContext";
 
 export default function Header() {
   const { getTotalItems } = useCart();
-  const totalItems = getTotalItems();
+  const cartItemCount = getTotalItems();
+  
   return (
     <header className="bg-[#EEEEEE] shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,9 +24,9 @@ export default function Header() {
               className="flex items-center space-x-2 text-colour-secondary hover:text-colour-primary transition-colors duration-200 relative"
             >
               <FiShoppingCart className="h-6 w-6" />
-              {totalItems > 0 && (
+              {cartItemCount > 0 && (
                 <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                  {totalItems}
+                  {cartItemCount}
                 </span>
               )}
             </Link>

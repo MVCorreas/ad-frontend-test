@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { Game } from "@/utils/endpoint";
 import GamesGrid from "./GamesGrid";
+import LoadingScreen from "./LoadingScreen";
 
 interface GamesCatalogProps {
   games: Game[];
@@ -21,64 +21,50 @@ export default function GamesCatalog({
 }: GamesCatalogProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [showInitialLoading, setShowInitialLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsInitialLoading(false);
+    const loadingTimer = setTimeout(() => {
+      setShowInitialLoading(false);
     }, 2000);
 
-    return () => clearTimeout(timer);
+    return () => clearTimeout(loadingTimer);
   }, []);
 
-  if (isInitialLoading) {
-    return (
-      <div className="fixed inset-0 flex flex-col justify-center items-center bg-white z-50">
-        <Image
-          src="/loading-pacman.gif"
-          alt="Loading..."
-          width={500}
-          height={500}
-          unoptimized
-        />
-        <span className="text-colour-primary text-lg font-semibold mt-4">
-          Loading GamerShop...
-        </span>
-      </div>
-    );
+  if (showInitialLoading) {
+    return <LoadingScreen />;
   }
 
-  const handleLoadMore = () => {
-    const params = new URLSearchParams(searchParams);
-    params.set("page", (currentPage + 1).toString());
-    router.push(`/?${params.toString()}`);
-  };
-
-  const handleLoadLess = () => {
-    const params = new URLSearchParams(searchParams);
-    if (currentPage > 2) {
-      params.set("page", (currentPage - 1).toString());
+  const navigateToPage = (pageNumber: number) => {
+    const urlParams = new URLSearchParams(searchParams);
+    if (pageNumber > 1) {
+      urlParams.set("page", pageNumber.toString());
     } else {
-      params.delete("page");
+      urlParams.delete("page");
     }
-    router.push(`/?${params.toString()}`);
+    router.push(`/?${urlParams.toString()}`);
   };
 
-  const canLoadMore = currentPage < totalPages;
-  const canLoadLess = currentPage > 1;
-  const totalGamesShown = games.length;
-  const totalGamesAvailable = totalPages * 12;
+  const handleLoadMore = () => navigateToPage(currentPage + 1);
+  const handleGoBack = () => navigateToPage(currentPage - 1);
+
+  const paginationState = {
+    canLoadMore: currentPage < totalPages,
+    canLoadLess: currentPage > 1,
+    totalGamesShown: games.length,
+    totalGamesAvailable: totalPages * 12,
+  };
 
   return (
     <GamesGrid
       games={games}
-      canLoadMore={canLoadMore}
-      canLoadLess={canLoadLess}
+      canLoadMore={paginationState.canLoadMore}
+      canLoadLess={paginationState.canLoadLess}
       onLoadMore={handleLoadMore}
-      onGoBack={handleLoadLess}
+      onGoBack={handleGoBack}
       isLoading={false}
-      totalGamesShown={totalGamesShown}
-      totalGamesAvailable={totalGamesAvailable}
+      totalGamesShown={paginationState.totalGamesShown}
+      totalGamesAvailable={paginationState.totalGamesAvailable}
     />
   );
 }

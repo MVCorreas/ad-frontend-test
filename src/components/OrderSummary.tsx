@@ -7,7 +7,7 @@ export default function OrderSummary() {
   const { items: cartItems, getTotalItems, getTotalPrice } = useCart();
 
   return (
-    <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-md mx-auto px-4 sm:px-6 lg:px-8 py-2">
       <div className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
         <h2 className="text-lg font-semibold text-gray-900 mb-4">
           Order Summary
@@ -23,7 +23,7 @@ export default function OrderSummary() {
           ))}
         </div>
 
-        <div className="border-t border-gray-200 pt-4 mb-6" data-test="order-total">
+        <div className="border-t border-gray-200 pt-4" data-test="order-total">
           <div className="flex justify-between">
             <span className="text-base font-semibold text-gray-900" >
               Order Total

@@ -28,15 +28,15 @@ export default function SearchBar({ availableFilters }: SearchBarProps) {
   };
 
   return (
-    <div className="flex items-center space-x-2" data-test="search-bar">
+    <div className="flex items-center space-x-2 " data-test="search-bar">
       <span className="text-colour-primary text-sm font-medium">Genre</span>
       <span className="text-colour-primary">|</span>
-      <div className="relative">
+      <div className="relative w-full">
         <select
           id="genre-filter"
           value={currentGenre}
           onChange={handleGenreChange}
-          className="appearance-none bg-transparent border-none px-2 py-1 pr-6 text-sm text-colour-secondary focus:outline-none cursor-pointer"
+          className="appearance-none bg-transparent border-none px-2 py-1 pr-6 text-sm text-colour-secondary focus:outline-none cursor-pointer w-full sm:max-w-lg"
         >
           <option value="">All</option>
           {availableFilters.map((filter: string) => (

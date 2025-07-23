@@ -1,4 +1,4 @@
-describe("Games Catalog", () => {
+describe("Games Catalog test", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000");
   });

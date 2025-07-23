@@ -25,7 +25,7 @@ export default function GameCard({ game }: GameCardProps) {
   const buttonText = isGameInCart ? "REMOVE" : "ADD TO CART";
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-gray-300 p-2 flex flex-col h-full" >
+    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-gray-300 p-2 flex flex-col h-full" data-test="game-card">
       <div className="relative p-3">
         <Image
           src={game.image}
@@ -35,7 +35,7 @@ export default function GameCard({ game }: GameCardProps) {
           className="w-full h-60 object-cover rounded-t-2xl rounded-b-none"
         />
         {game.isNew && (
-          <span className="absolute top-5 left-5 bg-stone-100 text-colour-primary w-14 h-8 flex items-center justify-center text-base font-normal leading-4 tracking-wider text-center rounded-md py-2 px-3 font-archivo">
+          <span className="absolute top-5 left-5 bg-stone-100 text-colour-primary w-14 h-8 flex items-center justify-center text-base font-normal leading-4 tracking-wider text-center rounded-md py-2 px-3 font-archivo" data-test="new-label">
             NEW
           </span>
         )}
@@ -47,10 +47,10 @@ export default function GameCard({ game }: GameCardProps) {
         </p>
 
         <div className="flex justify-between items-start mb-4 flex-1 gap-8">
-          <h3 className="font-semibold text-sm text-colour-primary flex-1 mr-2">
+          <h3 className="font-semibold text-sm text-colour-primary flex-1 mr-2" data-test="game-name">
             {game.name}
           </h3>
-          <span className="font-semibold text-sm text-colour-primary whitespace-nowrap">
+          <span className="font-semibold text-sm text-colour-primary whitespace-nowrap" data-test="game-price" >
             ${game.price}
           </span>
         </div>

@@ -13,19 +13,25 @@ export default function CartGrid() {
   return (
     <div className="bg-white p-6">
       {cartItems.map((game, index) => (
-        <div key={game.id}>
-          <div className="flex items-start space-x-4 py-6">
-            <div className="flex-shrink-0">
+        <div key={game.id} className="mb-8 sm:mb-4 lg:mb-0">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:space-x-4 py-6">
+            <div className="flex-shrink-0 mb-4 sm:mb-0 relative">
               <Image
                 src={game.image}
                 alt={game.name}
                 width={200}
                 height={120}
-                className="object-cover"
+                className="object-fit w-full sm:w-[200px] h-[180px]"
               />
+              <button
+                onClick={() => handleRemoveGame(game.id)}
+                className="absolute top-2 right-2 bg-white bg-opacity-80 hover:bg-opacity-100 text-gray-600 hover:text-gray-800 text-xl w-6 h-6 rounded-full flex items-center justify-center shadow-sm"
+              >
+                ×
+              </button>
             </div>
 
-            <div className="flex-1 min-w-0 flex flex-col justify-between h-[120px]">
+            <div className="flex-1 min-w-0 flex flex-col justify-between sm:h-[120px]">
               <div className="flex justify-between items-start">
                 <div className="flex-1">
                   <p className="text-sm text-colour-tertiary font-bold uppercase tracking-wide mb-1">
@@ -38,13 +44,6 @@ export default function CartGrid() {
                     {game.description}
                   </p>
                 </div>
-
-                <button
-                  onClick={() => handleRemoveGame(game.id)}
-                  className="text-gray-400 hover:text-gray-500 text-xl ml-4"
-                >
-                  ×
-                </button>
               </div>
 
               <div className="flex justify-end">

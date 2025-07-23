@@ -1,5 +1,3 @@
-import { should } from "chai";
-
 describe("Games Catalog", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000");

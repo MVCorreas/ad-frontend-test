@@ -28,7 +28,7 @@ export default function SearchBar({ availableFilters }: SearchBarProps) {
   };
 
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2" data-test="search-bar">
       <span className="text-colour-primary text-sm font-medium">Genre</span>
       <span className="text-colour-primary">|</span>
       <div className="relative">

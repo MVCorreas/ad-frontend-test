@@ -25,7 +25,7 @@ export default function GameCard({ game }: GameCardProps) {
   const buttonText = isGameInCart ? "REMOVE" : "ADD TO CART";
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-gray-300 p-2 flex flex-col h-full">
+    <div className="bg-white rounded-2xl border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 hover:border-gray-300 p-2 flex flex-col h-full" >
       <div className="relative p-3">
         <Image
           src={game.image}
@@ -42,7 +42,7 @@ export default function GameCard({ game }: GameCardProps) {
       </div>
 
       <div className="p-4 flex flex-col flex-1">
-        <p className="text-colour-tertiary text-xs font-bold mb-3 uppercase tracking-wide">
+        <p className="text-colour-tertiary text-xs font-bold mb-3 uppercase tracking-wide" data-test="game-genre">
           {game.genre}
         </p>
 

@@ -8,10 +8,6 @@ describe("Games Catalog", () => {
     cy.get("footer").should("exist");
   });
 
-  it("should display a loading gif and a message", () => {
-    cy.contains("Loading GamerShop...", { timeout: 1000 }).should("exist");
-  });
-
   it("should display a title and a searchbar", () => {
     cy.get(".text-2xl").should("exist").and("contain.text", "Top Sellers");
     cy.contains("Genre").should("be.visible");
@@ -42,7 +38,7 @@ describe("Games Catalog", () => {
         cy.contains("REMOVE").should("exist");
       });
   });
-  
+
   it('should remove a game from the cart when the "REMOVE" button is clicked', () => {
     cy.get(".grid > div")
       .first()

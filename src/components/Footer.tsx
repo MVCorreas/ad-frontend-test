@@ -12,6 +12,7 @@ export default function Footer() {
             width={150} 
             height={50}
             className="filter brightness-125 grayscale opacity-80 hover:brightness-100 hover:grayscale-0 transition-all duration-300"
+            data-test="footer-logo"
           />
         </Link>
       </div>

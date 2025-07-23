@@ -23,6 +23,8 @@ describe("Games Catalog test", () => {
     cy.get(".mt-12 > .flex > :nth-child(1)")
       .should("exist")
       .and("contain.text", "SEE MORE");
+    cy.get(".mt-12 > .flex > :nth-child(1)").click();
+    cy.url().should("include", "/?page=2");
   });
 
   it('should add a game to the cart when the "ADD TO CART" button is clicked', () => {

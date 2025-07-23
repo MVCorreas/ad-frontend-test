@@ -17,15 +17,15 @@ export default function OrderSummary() {
         <div className="space-y-3 mb-6">
           {cartItems.map((game) => (
             <div key={game.id} className="flex justify-between text-sm">
-              <span className="text-gray-600">{game.name}</span>
-              <span className="text-gray-900">${game.price.toFixed(2)}</span>
+              <span className="text-gray-600" data-test="cart-game-name">{game.name}</span>
+              <span className="text-gray-900" data-test="cart-game-price">${game.price.toFixed(2)}</span>
             </div>
           ))}
         </div>
 
-        <div className="border-t border-gray-200 pt-4 mb-6">
+        <div className="border-t border-gray-200 pt-4 mb-6" data-test="order-total">
           <div className="flex justify-between">
-            <span className="text-base font-semibold text-gray-900">
+            <span className="text-base font-semibold text-gray-900" >
               Order Total
             </span>
             <span className="text-base font-semibold text-gray-900">

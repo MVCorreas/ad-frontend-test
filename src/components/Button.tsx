@@ -29,6 +29,7 @@ export default function Button({
     <button 
       onClick={onClick} 
       className={`${baseClasses} ${sizeClasses} ${variantClasses}`}
+      data-test="button"
     >
       {text}
     </button>

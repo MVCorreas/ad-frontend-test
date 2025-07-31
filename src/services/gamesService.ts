@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export interface Game {
   id: string;
@@ -20,28 +20,28 @@ export interface GamesApiResponse {
 export const gamesService = {
   getGames(genre?: string, page: number = 1): Promise<GamesApiResponse> {
     const params = new URLSearchParams();
-    
+
     if (genre) {
-      params.set('genre', genre);
-    }
-    
-    if (page > 1) {
-      params.set('page', page.toString());
+      params.set("genre", genre);
     }
 
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/api/games${params.toString() ? `?${params.toString()}` : ''}`;
-    
-    return axios.get(url, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => {
-      console.error('Error fetching games:', error);
-      throw error;
-    });
+    params.set("page", page.toString());
+
+    const baseUrl =
+      typeof window === "undefined"
+        ? `${process.env.NEXT_PUBLIC_BASE_URL}`
+        : "";
+
+    const url = `${baseUrl}/api/games?${params.toString()}`;
+
+    return axios
+      .get(url)
+      .then((response) => {
+        return response.data;
+      })
+      .catch((error) => {
+        console.error("Error fetching games:", error);
+        throw error;
+      });
   },
 };

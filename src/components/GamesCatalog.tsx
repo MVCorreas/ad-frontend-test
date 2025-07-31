@@ -1,70 +1,80 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { Game } from "@/services/gamesService";
+import { useSearchParams } from "next/navigation";
+import { Game, gamesService } from "@/services/gamesService";
 import GamesGrid from "./GamesGrid";
 import LoadingScreen from "./LoadingScreen";
 
 interface GamesCatalogProps {
-  games: Game[];
-  currentPage: number;
-  totalPages: number;
   availableFilters: string[];
 }
 
-export default function GamesCatalog({
-  games,
-  currentPage,
-  totalPages,
-  availableFilters,
-}: GamesCatalogProps) {
-  const router = useRouter();
+export default function GamesCatalog({ availableFilters }: GamesCatalogProps) {
   const searchParams = useSearchParams();
-  const [showInitialLoading, setShowInitialLoading] = useState(true);
+  const [allGames, setAllGames] = useState<Game[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isInitialLoading, setIsInitialLoading] = useState(true);
+
+  const genre = searchParams.get("genre") || undefined;
 
   useEffect(() => {
-    const loadingTimer = setTimeout(() => {
-      setShowInitialLoading(false);
-    }, 2000);
+    setIsInitialLoading(true);
+    setAllGames([]);
+    setCurrentPage(1);
 
-    return () => clearTimeout(loadingTimer);
-  }, []);
+    gamesService
+      .getGames(genre, 1)
+      .then((data) => {
+        setAllGames(data.games);
+        setCurrentPage(1);
+        setTotalPages(data.totalPages);
+      })
+      .catch((error) => {
+        console.error("Error loading games:", error);
+      })
+      .finally(() => {
+        setIsInitialLoading(false);
+      });
+  }, [genre]);
 
-  if (showInitialLoading) {
+  const handleLoadMore = () => {
+    if (isLoading || currentPage >= totalPages) return;
+
+    setIsLoading(true);
+    const nextPage = currentPage + 1;
+
+    gamesService
+      .getGames(genre, nextPage)
+      .then((data) => {
+        setAllGames((prev) => [...prev, ...data.games]);
+        setCurrentPage(nextPage);
+      })
+      .catch((error) => {
+        console.error("Error loading more games:", error);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  if (isInitialLoading) {
     return <LoadingScreen />;
   }
 
-  const navigateToPage = (pageNumber: number) => {
-    const urlParams = new URLSearchParams(searchParams);
-    if (pageNumber > 1) {
-      urlParams.set("page", pageNumber.toString());
-    } else {
-      urlParams.delete("page");
-    }
-    router.push(`/?${urlParams.toString()}`);
-  };
-
-  const handleLoadMore = () => navigateToPage(currentPage + 1);
-  const handleGoBack = () => navigateToPage(currentPage - 1);
-
-  const paginationState = {
-    canLoadMore: currentPage < totalPages,
-    canLoadLess: currentPage > 1,
-    totalGamesShown: games.length,
-    totalGamesAvailable: totalPages * 12,
-  };
+  const canLoadMore = currentPage < totalPages;
 
   return (
     <GamesGrid
-      games={games}
-      canLoadMore={paginationState.canLoadMore}
-      canLoadLess={paginationState.canLoadLess}
+      games={allGames}
+      canLoadMore={canLoadMore}
+      canLoadLess={false}
       onLoadMore={handleLoadMore}
-      onGoBack={handleGoBack}
-      isLoading={false}
-      totalGamesShown={paginationState.totalGamesShown}
-      totalGamesAvailable={paginationState.totalGamesAvailable}
+      isLoading={isLoading}
+      totalGamesShown={allGames.length}
+      totalGamesAvailable={totalPages * 12}
     />
   );
 }

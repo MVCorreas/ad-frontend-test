@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Game, gamesService } from "@/services/gamesService";
 import GamesGrid from "./GamesGrid";
 import LoadingScreen from "./LoadingScreen";
+import Spinner from "./Spinner";
 
 interface GamesCatalogProps {
   availableFilters: string[];
@@ -15,13 +16,12 @@ export default function GamesCatalog({ availableFilters }: GamesCatalogProps) {
   const [allGames, setAllGames] = useState<Game[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isInitialLoading, setIsInitialLoading] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const genre = searchParams.get("genre") || undefined;
 
   useEffect(() => {
-    setIsInitialLoading(true);
     setAllGames([]);
     setCurrentPage(1);
 
@@ -36,14 +36,14 @@ export default function GamesCatalog({ availableFilters }: GamesCatalogProps) {
         console.error("Error loading games:", error);
       })
       .finally(() => {
-        setIsInitialLoading(false);
+        setIsInitialLoad(false);
       });
   }, [genre]);
 
   const handleLoadMore = () => {
-    if (isLoading || currentPage >= totalPages) return;
+    if (isLoadingMore || currentPage >= totalPages) return;
 
-    setIsLoading(true);
+    setIsLoadingMore(true);
     const nextPage = currentPage + 1;
 
     gamesService
@@ -56,12 +56,24 @@ export default function GamesCatalog({ availableFilters }: GamesCatalogProps) {
         console.error("Error loading more games:", error);
       })
       .finally(() => {
-        setIsLoading(false);
+        setIsLoadingMore(false);
       });
   };
 
-  if (isInitialLoading) {
+  // Show loading screen only on very first mount
+  if (isInitialLoad) {
     return <LoadingScreen />;
+  }
+
+  // Show spinner during genre changes (after initial load)
+  if (allGames.length === 0) {
+    return (
+      <div className="bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <Spinner size="lg" className="py-20" text="Loading games..." />
+        </div>
+      </div>
+    );
   }
 
   const canLoadMore = currentPage < totalPages;
@@ -72,7 +84,7 @@ export default function GamesCatalog({ availableFilters }: GamesCatalogProps) {
       canLoadMore={canLoadMore}
       canLoadLess={false}
       onLoadMore={handleLoadMore}
-      isLoading={isLoading}
+      isLoading={isLoadingMore}
       totalGamesShown={allGames.length}
       totalGamesAvailable={totalPages * 12}
     />

@@ -21,6 +21,7 @@ export default function Pagination({
             onClick={onLoadMore}
             variant="secondary"
             size="small"
+            isLoading={isLoading}
           />
         )}
       </div>

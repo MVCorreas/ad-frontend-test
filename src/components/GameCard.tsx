@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Game } from "@/utils/endpoint";
+import { Game } from "@/services/gamesService";
 import { useCart } from "@/context/CartContext";
 import Button from "./Button";
 

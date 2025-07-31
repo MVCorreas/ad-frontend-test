@@ -1,4 +1,4 @@
-import { Game } from "@/utils/endpoint";
+import { Game } from "@/services/gamesService";
 import GameCard from "./GameCard";
 import Pagination from "./Pagination";
 

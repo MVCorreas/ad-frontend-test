@@ -7,7 +7,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
-import { Game } from "@/utils/endpoint";
+import { Game } from "@/services/gamesService";
 
 interface CartContextType {
   items: Game[];

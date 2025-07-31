@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { Game } from "@/utils/endpoint";
+import { Game } from "@/services/gamesService";
 import GamesGrid from "./GamesGrid";
 import LoadingScreen from "./LoadingScreen";
 

@@ -1,5 +1,3 @@
-import axios from "axios";
-
 export interface Game {
   id: string;
   genre: string;
@@ -17,8 +15,38 @@ export interface GamesApiResponse {
   currentPage: number;
 }
 
+const getBaseURL = () => {
+  if (typeof window === "undefined") {
+    // Server-side
+    if (process.env.VERCEL_URL) {
+      return `https://${process.env.VERCEL_URL}`;
+    }
+    return process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  }
+  // Client-side - use relative URLs
+  return "";
+};
+
+const apiCall = async (path: string): Promise<GamesApiResponse> => {
+  const baseURL = getBaseURL();
+  const url = baseURL ? `${baseURL}${path}` : path;
+
+  const resp = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (resp.ok) {
+    return await resp.json();
+  } else {
+    throw new Error('Failed to fetch games');
+  }
+};
+
 export const gamesService = {
-  getGames(genre?: string, page: number = 1): Promise<GamesApiResponse> {
+  async getGames(genre?: string, page: number = 1): Promise<GamesApiResponse> {
     const params = new URLSearchParams();
 
     if (genre) {
@@ -27,21 +55,6 @@ export const gamesService = {
 
     params.set("page", page.toString());
 
-    const baseUrl =
-      typeof window === "undefined"
-        ? `${process.env.NEXT_PUBLIC_BASE_URL}`
-        : "";
-
-    const url = `${baseUrl}/api/games?${params.toString()}`;
-
-    return axios
-      .get(url)
-      .then((response) => {
-        return response.data;
-      })
-      .catch((error) => {
-        console.error("Error fetching games:", error);
-        throw error;
-      });
+    return await apiCall(`/api/games?${params.toString()}`);
   },
 };

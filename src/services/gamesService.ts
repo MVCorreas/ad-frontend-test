@@ -36,17 +36,35 @@ const apiCall = async (path: string): Promise<GamesApiResponse> => {
   const baseURL = getBaseURL();
   const url = baseURL ? `${baseURL}${path}` : path;
 
-  const resp = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+  try {
+    const resp = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-  if (resp.ok) {
-    return await resp.json();
-  } else {
-    throw new Error('Failed to fetch games');
+    if (resp.ok) {
+      return await resp.json();
+    } else {
+      // If API call fails, return empty data structure
+      console.warn(`API call failed: ${resp.status} ${resp.statusText}`);
+      return {
+        games: [],
+        availableFilters: [],
+        totalPages: 0,
+        currentPage: 1
+      };
+    }
+  } catch (error) {
+    // If fetch fails completely (e.g., during build), return empty data
+    console.warn('API call failed:', error);
+    return {
+      games: [],
+      availableFilters: [],
+      totalPages: 0,
+      currentPage: 1
+    };
   }
 };
 

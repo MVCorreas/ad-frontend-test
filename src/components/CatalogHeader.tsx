@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import SearchBar from "./SearchBar";
 
 interface CatalogHeaderProps {
@@ -18,7 +19,9 @@ export default function CatalogHeader({
           </div>
         </div>
         <div className="mt-8 flex flex-col sm:flex-row sm:items-center sm:justify-end">
-          <SearchBar availableFilters={availableFilters} />
+          <Suspense fallback={<div className="text-gray-500">Loading filters...</div>}>
+            <SearchBar availableFilters={availableFilters} />
+          </Suspense>
         </div>
       </div>
     </div>

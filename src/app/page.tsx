@@ -1,16 +1,19 @@
 import CatalogHeader from "@/components/CatalogHeader";
 import GamesCatalog from "@/components/GamesCatalog";
 import { gamesService } from "@/services/gamesService";
+import { Suspense } from "react";
 
 export default async function Home() {
   try {
     const { availableFilters } = await gamesService.getGames();
-    
+
     return (
       <>
         <div className="min-h-screen bg-white">
           <CatalogHeader availableFilters={availableFilters} />
-          <GamesCatalog availableFilters={availableFilters} />
+          <Suspense fallback={<div className="flex justify-center items-center py-8"><div className="text-gray-500">Loading games...</div></div>}>
+            <GamesCatalog availableFilters={availableFilters} />
+          </Suspense>
         </div>
       </>
     );

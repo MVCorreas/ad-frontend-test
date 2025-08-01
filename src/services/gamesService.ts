@@ -18,6 +18,11 @@ export interface GamesApiResponse {
 const getBaseURL = () => {
   if (typeof window === "undefined") {
     // Server-side
+    // For production, use your production domain
+    if (process.env.VERCEL_ENV === "production") {
+      return "https://apply-digital-frontend-test-seven.vercel.app";
+    }
+    // For preview/development, use VERCEL_URL
     if (process.env.VERCEL_URL) {
       return `https://${process.env.VERCEL_URL}`;
     }
